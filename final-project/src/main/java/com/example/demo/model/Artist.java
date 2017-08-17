@@ -22,7 +22,7 @@ public class Artist {
     @Column(name="lastName")
     private String lastName;
 
-    @Column(name="email")
+    @Column( unique = true , name="email")
     private String email;
 
     @Column(name="password")
