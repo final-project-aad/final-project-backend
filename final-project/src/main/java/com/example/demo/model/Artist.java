@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import com.sun.istack.internal.Nullable;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -26,12 +28,15 @@ public class Artist {
     @Column(name="password")
     private String password;
 
+    @Nullable
     @Column(name="bio")
     private String bio;
 
+    @Nullable
     @OneToMany
     private List<Show> shows;
 
+    @Nullable
     @OneToMany
     private List<Playlist> artistPlaylists;
 
@@ -46,6 +51,13 @@ public class Artist {
         this.bio = bio;
         this.shows = shows;
         this.artistPlaylists = artistPlaylists;
+    }
+
+    public Artist(String firstName, String lastName, String email, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
     }
 
     public String getFirstName() {
