@@ -19,13 +19,17 @@ public class ArtistController {
     @Autowired
     ArtistRepository artistRepo;
 
-    @PostMapping("/signup")
-    public Artist artistSignUp(@RequestBody Artist artist){
+    @PostMapping("/register")
+    public String artistSignUp(@RequestBody Artist artist){
 
-        String hashed = BCrypt.hashpw(artist.getPassword(), BCrypt.gensalt(25));
+        System.out.println(artist);
+
+
+        String hashed = BCrypt.hashpw(artist.getPassword(), BCrypt.gensalt(12));
         String email = artist.getEmail();
         String firstName = artist.getFirstName();
         String lastName = artist.getLastName();
+
 
         Artist newArtist = new Artist();
         newArtist.setFirstName(firstName);
@@ -33,9 +37,10 @@ public class ArtistController {
         newArtist.setEmail(email);
         newArtist.setPassword(hashed);
 
+
         artistRepo.save(newArtist);
 
-        return newArtist;
+        return "user created";
 
     }
 
@@ -47,7 +52,7 @@ public class ArtistController {
         if(foundArtist == null){
             return "no artist found";
         }
-        if (BCrypt.checkpw(foundArtist.getPassword(), artist.getPassword())){
+        if (BCrypt.checkpw(artist.getPassword(), foundArtist.getPassword())){
             session.setAttribute("artistId", foundArtist.getArtistId());
             return "user successfully logged in";
 
