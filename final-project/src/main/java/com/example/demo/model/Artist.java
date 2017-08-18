@@ -33,7 +33,7 @@ public class Artist {
     private String bio;
 
     @Nullable
-    @OneToMany
+    @OneToMany(orphanRemoval = true , cascade = CascadeType.REMOVE)
     private List<Show> shows;
 
     @Nullable

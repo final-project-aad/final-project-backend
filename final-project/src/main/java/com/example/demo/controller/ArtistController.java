@@ -5,13 +5,13 @@ import com.example.demo.model.Artist;
 import com.example.demo.model.Playlist;
 import com.example.demo.model.Song;
 import com.example.demo.repository.ArtistRepository;
+import com.example.demo.repository.PlaylistRepository;
 import com.example.demo.repository.SongRepository;
+import com.sun.media.jfxmedia.events.PlayerStateListener;
+import com.twilio.twiml.Play;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
@@ -25,6 +25,8 @@ public class ArtistController {
     ArtistRepository artistRepo;
     @Autowired
     SongRepository songRepo;
+    @Autowired
+    PlaylistRepository playlistRepo;
 
     @PostMapping("/register")
     public String artistSignUp(@RequestBody Artist artist){
@@ -68,8 +70,9 @@ public class ArtistController {
         return "No email/password combination exsist";
     }
 
-    @PostMapping("/add-song")
+    @PostMapping("/create-song")
     public String createSong(@RequestBody Song song ){
+
 
         ArrayList<Song> allSongs = new ArrayList<>();
 
@@ -88,18 +91,6 @@ public class ArtistController {
 
     }
 
-//    @PostMapping("/create-playlist")
-//    public String createPlaylist(@RequestBody Playlist playlist , HttpSession session){
-//
-//        Playlist newPlayList = new Playlist();
-//        newPlayList.setPlaylistName(playlist.getPlaylistName());
-//
-//
-//
-//
-//
-//
-//    }
 
 
 }
