@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import com.sun.istack.internal.Nullable;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -16,6 +18,7 @@ public class Playlist {
     @Column(name="playlistName")
     private String playlistName;
 
+    @Nullable
     @OneToMany
     private List<Song> songsList;
 
@@ -26,6 +29,7 @@ public class Playlist {
         this.playlistName = playlistName;
         this.songsList = songsList;
     }
+
 
     public String getPlaylistName() {
         return playlistName;
