@@ -32,7 +32,7 @@ public class Artist {
     @Column(name="bio")
     private String bio;
 
-    @Nullable
+
     @OneToMany
     private List<Show> shows;
 

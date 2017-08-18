@@ -30,6 +30,7 @@ public class ShowController {
 //        List<Show> showList = new ArrayList<>();
 //        showList.add(newShow);
         List<Show> showList = createdBy.getShows();
+        newShow.setStarted(false);
         showList.add(newShow);
         try {
             showRepo.save(newShow);
@@ -46,15 +47,4 @@ public class ShowController {
         return currentArtist.getShows();
     }
 
-    @DeleteMapping("/{showId}/delete")
-    @CrossOrigin
-    public String deleteShow(@PathVariable int showId){
-        try {
-            Show selectedShow = showRepo.findOne(showId);
-            showRepo.delete(selectedShow);
-        } catch (Exception ex) {
-            return "error deleting show";
-        }
-        return "show deleted successfully";
-    }
 }

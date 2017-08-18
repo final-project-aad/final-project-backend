@@ -54,6 +54,7 @@ public class Show {
     public Show(String locationName, String locationAddress) {
         this.locationName = locationName;
         this.locationAddress = locationAddress;
+        this.isStarted = false;
     }
 
     public String getLocationName() {
