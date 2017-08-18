@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Artist;
 import com.example.demo.model.Show;
+import com.example.demo.repository.ArtistRepository;
 import com.example.demo.repository.ShowRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,13 +20,17 @@ public class ShowController {
     @Autowired
     ShowRepository showRepo;
 
+    @Autowired
+    ArtistRepository artistRepo;
+
     @PostMapping("/create-show")
     @CrossOrigin
     public String createShow(@RequestBody Show newShow, HttpSession session) {
-        Artist createdBy = userRepo.findOne((Integer) session.getAttribute("artistId"));
-        List<Show> showList = new ArrayList<>();
+        Artist createdBy = artistRepo.findOne((Integer) session.getAttribute("artistId"));
+//        List<Show> showList = new ArrayList<>();
+//        showList.add(newShow);
+        List<Show> showList = createdBy.getShows();
         showList.add(newShow);
-        createdBy.setShows(showList);
         try {
             showRepo.save(newShow);
         } catch (Exception ex) {
@@ -37,7 +42,19 @@ public class ShowController {
     @GetMapping("/view-shows")
     @CrossOrigin
     public List<Show> allShows(HttpSession session) {
-        Artist currentArtist = userRepo.findOne((Integer) session.getAttribute("artistId"));
+        Artist currentArtist = artistRepo.findOne((Integer) session.getAttribute("artistId"));
         return currentArtist.getShows();
+    }
+
+    @DeleteMapping("/{showId}/delete")
+    @CrossOrigin
+    public String deleteShow(@PathVariable int showId){
+        try {
+            Show selectedShow = showRepo.findOne(showId);
+            showRepo.delete(selectedShow);
+        } catch (Exception ex) {
+            return "error deleting show";
+        }
+        return "show deleted successfully";
     }
 }
