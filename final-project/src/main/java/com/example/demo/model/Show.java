@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -47,6 +49,11 @@ public class Show {
         this.playlist = playlist;
         this.songQueue = songQueue;
         this.isStarted = isStarted;
+    }
+
+    public Show(String locationName, String locationAddress) {
+        this.locationName = locationName;
+        this.locationAddress = locationAddress;
     }
 
     public String getLocationName() {
