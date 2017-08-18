@@ -47,4 +47,20 @@ public class ShowController {
         return currentArtist.getShows();
     }
 
+    @DeleteMapping("/{showId}/delete")
+    @CrossOrigin
+    public String deleteShow(@PathVariable int showId , HttpSession session){
+        try {
+            Show selectedShow = showRepo.findOne(showId);
+            Artist currentArtist = artistRepo.findOne((Integer) session.getAttribute("artistId"));
+            List<Show> artistShows = currentArtist.getShows();
+            artistShows.remove(selectedShow);
+            artistRepo.save(currentArtist);
+            showRepo.delete(selectedShow);
+
+        } catch (Exception ex) {
+            return "error deleting show";
+        }
+        return "show deleted successfully";
+    }
 }
