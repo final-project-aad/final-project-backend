@@ -13,18 +13,18 @@ public class Queue {
     @GeneratedValue
     private int queueId;
 
-    @OneToMany
+    @ManyToMany
     private List<Song> songs;
 
-    @OneToOne
-    private Show show;
+//    @OneToOne
+//    private Show show;
 
     public Queue() {
     }
 
     public Queue(List<Song> songs, Show show) {
         this.songs = songs;
-        this.show = show;
+//        this.show = show;
     }
 
     public List<Song> getSongs() {
@@ -35,13 +35,13 @@ public class Queue {
         this.songs = songs;
     }
 
-    public Show getShow() {
-        return show;
-    }
+//    public Show getShow() {
+//        return show;
+//    }
 
-    public void setShow(Show show) {
-        this.show = show;
-    }
+//    public void setShow(Show show) {
+//        this.show = show;
+//    }
 
     public int getQueueId() {
         return queueId;
@@ -67,7 +67,7 @@ public class Queue {
         return "Queue{" +
                 "queueId=" + queueId +
                 ", songs=" + songs +
-                ", show=" + show +
+//                ", show=" + show +
                 '}';
     }
 }

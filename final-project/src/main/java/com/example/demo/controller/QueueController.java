@@ -35,14 +35,32 @@ public class QueueController {
     @PostMapping("/{showId}/{songId}")
     public String addSong(@PathVariable int showId, @PathVariable int songId) {
         Show currentShow = showRepo.findOne(showId);
+
         Song selectedSong = songRepo.findOne(songId);
-        Queue newQueue = new Queue();
-        newQueue.setShow(currentShow);
-        List<Song> songQueue = newQueue.getSongs();
-        songQueue.add(selectedSong);
-        currentShow.setSongQueue(newQueue);
+        Queue showQueue = currentShow.getSongQueue();
+        if(showQueue == null) {
+            Queue newQueue = new Queue();
+
+//        newQueue.setShow(currentShow);
+            List<Song> songQueue = new ArrayList<>();
+            songQueue.add(selectedSong);
+            newQueue.setSongs(songQueue);
+
+            currentShow.setSongQueue(newQueue);
+            try {
+                queueRepo.save(newQueue);
+            } catch (Exception ex) {
+                return "problem making que or adding song to queue";
+            }
+            return "que created and song added succesfully";
+        } else {
+           List<Song> queueSongs = showQueue.getSongs();
+            queueSongs.add(selectedSong);
+
+        }
+
         try {
-            queueRepo.save(newQueue);
+            queueRepo.save(showQueue);
         } catch (Exception ex) {
             return "problem adding song to queue";
         }
