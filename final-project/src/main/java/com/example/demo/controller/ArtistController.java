@@ -70,26 +70,26 @@ public class ArtistController {
         return "No email/password combination exsist";
     }
 
-    @PostMapping("/create-song")
-    public String createSong(@RequestBody Song song ){
-
-
-        ArrayList<Song> allSongs = new ArrayList<>();
-
-        songRepo.findAll().forEach(allSongs:: add);
-
-        for (int i = 0; i < allSongs.size(); i++) {
-            if (allSongs.get(i).getOriginalArtist().equals(song.getOriginalArtist()) && allSongs.get(i).getSongName().equals(song.getSongName())) {
-                return "song has already been created";
-            }
-
-        }
-        System.out.println(allSongs);
-        songRepo.save(song);
-
-        return "song created successfully";
-
-    }
+//    @PostMapping("/create-song")
+//    public String createSong(@RequestBody Song song ){
+//
+//
+//        ArrayList<Song> allSongs = new ArrayList<>();
+//
+//        songRepo.findAll().forEach(allSongs:: add);
+//
+//        for (int i = 0; i < allSongs.size(); i++) {
+//            if (allSongs.get(i).getOriginalArtist().equals(song.getOriginalArtist()) && allSongs.get(i).getSongName().equals(song.getSongName())) {
+//                return "song has already been created";
+//            }
+//
+//        }
+//        System.out.println(allSongs);
+//        songRepo.save(song);
+//
+//        return "song created successfully";
+//
+//    }
 
 
 
