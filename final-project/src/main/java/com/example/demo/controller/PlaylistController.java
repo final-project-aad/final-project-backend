@@ -60,19 +60,25 @@ public class PlaylistController {
 
         songRepo.findAll().forEach(allSongs::add);
 
-        for (int i = 0; i < allSongs.size(); i++) {
-            if (allSongs.get(i).getOriginalArtist().equals(song.getOriginalArtist()) && allSongs.get(i).getSongName().equals(song.getSongName())) {
-                playlistSongs.add(allSongs.get(i));
-            } else {
-                Newsong = true;
+        if(allSongs.size() != 0) {
+            for (int i = 0; i < allSongs.size(); i++) {
+                if (allSongs.get(i).getOriginalArtist().equals(song.getOriginalArtist()) && allSongs.get(i).getSongName().equals(song.getSongName())) {
+                    playlistSongs.add(song);
+                    System.out.println("song already exist");
+                } else {
+                    Newsong = true;
+                }
+            }
+            if (Newsong) {
+                songRepo.save(song);
+                playlistSongs.add(song);
             }
         }
-        if (Newsong) {
+        else{
             songRepo.save(song);
             playlistSongs.add(song);
         }
 
-        currentplayList.setSongsList(playlistSongs);
         try {
 
             playlistRepo.save(currentplayList);
@@ -82,5 +88,13 @@ public class PlaylistController {
 
 
         return "songs were added to play list";
+    }
+
+    @GetMapping("/view-playlist")
+    @CrossOrigin
+    public List<Playlist> viewPlaylist(HttpSession session){
+        Artist currentArtist = artistRepo.findOne((Integer) session.getAttribute("artistId"));
+        List<Playlist> artistPlaylist = currentArtist.getArtistPlaylists();
+        return artistPlaylist;
     }
 }

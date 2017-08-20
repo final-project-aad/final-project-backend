@@ -1,8 +1,10 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Artist;
+import com.example.demo.model.Playlist;
 import com.example.demo.model.Show;
 import com.example.demo.repository.ArtistRepository;
+import com.example.demo.repository.PlaylistRepository;
 import com.example.demo.repository.ShowRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +24,9 @@ public class ShowController {
 
     @Autowired
     ArtistRepository artistRepo;
+
+    @Autowired
+    PlaylistRepository playlistRepo;
 
     @PostMapping("/create-show")
     @CrossOrigin
@@ -44,6 +49,35 @@ public class ShowController {
     public List<Show> allShows(HttpSession session) {
         Artist currentArtist = artistRepo.findOne((Integer) session.getAttribute("artistId"));
         return currentArtist.getShows();
+    }
+
+    @PostMapping("/{showId}/add-playList")
+    @CrossOrigin
+    public String addPlaylistShow(@RequestBody Playlist addedPlaylist , @PathVariable int showId, HttpSession session){
+        Artist currentArtist = artistRepo.findOne((Integer) session.getAttribute("artistId"));
+        Show show = showRepo.findOne(showId);
+        List<Playlist> playlists = show.getPlaylist();
+        ArrayList<Playlist> artistPlaylist = new ArrayList<>();
+        currentArtist.getArtistPlaylists().forEach(artistPlaylist::add);
+
+
+        for (Playlist listChoice: artistPlaylist) {
+            if (listChoice.getPlaylistName().equals(addedPlaylist.getPlaylistName())){
+                playlists.add(listChoice);
+                System.out.println("this is the playlist: " + playlists);
+
+            }
+        }
+
+        try{
+            showRepo.save(show);
+        }
+        catch (Exception ex){
+            return "play list could not be added";
+        }
+
+        return "playlist added to show successfully";
+
     }
 
     @DeleteMapping("/{showId}/delete")
