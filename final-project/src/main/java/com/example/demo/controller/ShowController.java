@@ -35,6 +35,7 @@ public class ShowController {
 //        List<Show> showList = new ArrayList<>();
 //        showList.add(newShow);
         List<Show> showList = createdBy.getShows();
+        newShow.setStarted(false);
         showList.add(newShow);
         try {
             showRepo.save(newShow);

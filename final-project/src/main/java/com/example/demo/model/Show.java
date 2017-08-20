@@ -32,8 +32,10 @@ public class Show {
     @OneToMany
     private List<Playlist> playlist;
 
-    @Column(name="songQueue")
-    private ArrayList<Song> songQueue;
+//    @Column(name="songQueue")
+//    private ArrayList<Song> songQueue;
+    @OneToOne
+    private Queue songQueue;
 
     @Column(name="isStarted")
     private Boolean isStarted;
@@ -41,19 +43,28 @@ public class Show {
     public Show() {
     }
 
-    public Show(String locationName, String locationAddress, Date startTime, Date endTime, List<Playlist> playlist, ArrayList<Song> songQueue, Boolean isStarted) {
+    public Show(String locationName, String locationAddress, Date startTime, Date endTime, List<Playlist> playlist, Boolean isStarted) {
         this.locationName = locationName;
         this.locationAddress = locationAddress;
         this.startTime = startTime;
         this.endTime = endTime;
         this.playlist = playlist;
-        this.songQueue = songQueue;
+//        this.songQueue = songQueue;
         this.isStarted = isStarted;
     }
 
     public Show(String locationName, String locationAddress) {
         this.locationName = locationName;
         this.locationAddress = locationAddress;
+        this.isStarted = false;
+    }
+
+    public Queue getSongQueue() {
+        return songQueue;
+    }
+
+    public void setSongQueue(Queue songQueue) {
+        this.songQueue = songQueue;
     }
 
     public String getLocationName() {
@@ -96,13 +107,13 @@ public class Show {
         this.playlist = playlist;
     }
 
-    public List<Song> getSongQueue() {
-        return songQueue;
-    }
-
-    public void setSongQueue(ArrayList<Song> songQueue) {
-        this.songQueue = songQueue;
-    }
+//    public List<Song> getSongQueue() {
+//        return songQueue;
+//    }
+//
+//    public void setSongQueue(ArrayList<Song> songQueue) {
+//        this.songQueue = songQueue;
+//    }
 
     public Boolean getStarted() {
         return isStarted;
@@ -140,7 +151,7 @@ public class Show {
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
                 ", playlist=" + playlist +
-                ", songQueue=" + songQueue +
+//                ", songQueue=" + songQueue +
                 ", isStarted=" + isStarted +
                 '}';
     }
