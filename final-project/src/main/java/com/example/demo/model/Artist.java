@@ -32,13 +32,8 @@ public class Artist {
     @Column(name="bio")
     private String bio;
 
-<<<<<<< HEAD
-
-    @OneToMany
-=======
     @Nullable
     @OneToMany(orphanRemoval = true , cascade = CascadeType.REMOVE)
->>>>>>> 20ecb10ef79caa01fac28aa4db08d288afe5a8f0
     private List<Show> shows;
 
     @Nullable
